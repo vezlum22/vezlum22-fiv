@@ -1,10 +1,13 @@
 #include <avr/io.h>
+#include <avr/delay.h>
 
 int main(){
     //Uart config: 76800/8/N/1
     //Onboard LED toggles on each character received
     uint8_t c;
     DDRB |= (1 << PB5);
+
+    //UART Config
     UBRR0 = 0x0C; //76800 at 16MHz
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0); //Enable RX and TX
     UCSR0C |= (1<< UCSZ01) | (1<<UCSZ00);
@@ -20,12 +23,22 @@ int main(){
                     //1000 -> 0,5ms
                     //5000 -> 2,5ms 
 
+// Timer0 -> ctc Modus 
+// Period: 125 us
+// Enable Interrupt: TIMER0_COMPB  
+
     /*DDRB |= (1 << PB1); //Set OC1A (PB1) as output
     TCCR1A |= (1 << COM1A0) | (1 << WGM12); //Toggle OC1A on compare match
     TCCR1A |= (1 << WGM12) | (1 << CS12) | (1 << CS10); //CTC mode
 
     OCR1A = 15623; //1s at 1024 prescaler
     */
+
+    TCCR0A = (1<<WGM01); 
+    TCCR0B = (1<<CS01);
+    OCR0B = 
+    TIMSK0 = 
+
     while(1){
         if(UCSR0A & (1 << RXC0)){ //Check if data received
             c = UDR0; //Read received data
@@ -35,7 +48,7 @@ int main(){
                 OCR1A = 1000;
             }
             if (c=='r'){
-                OCR1A = 4000;
+                OCR1A = 4000;       //2 clk cycles = 125ns 
             }
         }
     }
@@ -44,3 +57,6 @@ int main(){
     return 0;
 }
 
+ISR(TIMER0_COMPB_vect){
+
+}
