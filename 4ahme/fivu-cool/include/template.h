@@ -3,7 +3,7 @@
  * @author author
  * @date date
  * @version 0.0
- * @brief c-template
+ * @brief h-template
  *
  * Features:
  *  
@@ -35,7 +35,7 @@ extern "C" {
 /****************************************************/
 
 /****************************************************/
-// LOCAL STATIC STRUCTS and VARIABLES
+// GLOBAL STATIC STRUCTS and VARIABLES
 /****************************************************/
 
 /****************************************************/

@@ -2,7 +2,7 @@
  * @file template.c
  * @author author
  * @date date
- * @brief h-template
+ * @brief c-template
  */
 
 /****************************************************/

@@ -1,59 +1,62 @@
-/**
- * @file timer0.c
- * @author JR
- * @date 14.01.2026
- * @brief Timer0 functions
+/*
+ * File:            avrcomport.h
+ * Author:          XYZ
+ * Date:            24.12.2025
+ *
+ * Description:
+ * Providing AVR UART transport helpers for the CLI
+ *
+ * License:
+ * This code is released under Creative Commons Legal Code CC0 1.0 Universal
+ *
+ * Contact:
+ * email
  */
+
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /****************************************************/
 // INCLUDES
 /****************************************************/
 
-#include <avr/io.h>
-#include "timer0.h"
+#include <cli_transport.h>
 
 /****************************************************/
-// LOCAL DEFINES
-/****************************************************/
-
-/****************************************************/
-// LOCAL ENUMS
+// GLOBAL DEFINES
 /****************************************************/
 
 /****************************************************/
-// LOCAL STRUCT TYPE DEFINITION
+// GLOBAL ENUMS
 /****************************************************/
 
 /****************************************************/
-// LOCAL STATIC STRUCTS and VARIABLES
+// GLOBAL STRUCTURE TYPE DEFINITION
 /****************************************************/
 
 /****************************************************/
-// LOCAL FUNCTIONS
+// GLOBAL STRUCTURE VARIABLE DECLARATION, INIT
 /****************************************************/
 
 /****************************************************/
-// LOCAL MACROS
+// GLOBAL MACROS
 /****************************************************/
 
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
 
-// Initialises Timer0 to generate TIMER0_COMPA IRQs ervery 125us
-void timer0CTCInit()
-{
-    // Mode of Operation: CTC
-    TCCR0A = (1 << WGM01);
+#ifdef __AVR__
+// Create a transport descriptor for an AVR UART instance
+CliTransport avrcomportCreateUartTx(uint8_t uartId, uint32_t bps);
 
-    // Clock Select Bit set to: clk/8
-    // fz/8 = 2 Mhz -> 500 ns per clock
-    TCCR0B = (1 << CS01);
-    
-    // Timer0 Period: 125 us
-    // 125 us / 500 ns = 250
-    OCR0A = 249;    // 250 -1
+// Configures an AVR communication port
+uint8_t avrcomportConfig(CliComPort** cliComPort, uint8_t uartId, uint32_t bps);
+#endif
 
-    // Enable Interrupt: TIMER0_COMPA
-    TIMSK0 = (1 << OCIE0A);
+#ifdef __cplusplus
 }
+#endif

@@ -1,59 +1,57 @@
 /**
- * @file timer0.c
+ * @file timer1.h
  * @author JR
- * @date 14.01.2026
- * @brief Timer0 functions
+ * @date 21.01.2026
+ * @version 1.0
+ * @brief Timer1 functions
+ *
+ * Features: Functions to confifgure Timer/Counter1
+ *  
+ * @copyright
+ * Released under the Apache License, Version 2.0, January 2004.
+ * http://www.apache.org/licenses/
  */
+
+#pragma once
+
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 /****************************************************/
 // INCLUDES
 /****************************************************/
 
-#include <avr/io.h>
-#include "timer0.h"
-
 /****************************************************/
-// LOCAL DEFINES
+// GLOBAL DEFINES
 /****************************************************/
 
 /****************************************************/
-// LOCAL ENUMS
+// GLOBAL ENUMS
 /****************************************************/
 
 /****************************************************/
-// LOCAL STRUCT TYPE DEFINITION
+// GLOBAL STRUCT TYPE DEFINITION
 /****************************************************/
 
 /****************************************************/
-// LOCAL STATIC STRUCTS and VARIABLES
+// GLOBAL STATIC STRUCTS and VARIABLES
 /****************************************************/
 
 /****************************************************/
-// LOCAL FUNCTIONS
-/****************************************************/
-
-/****************************************************/
-// LOCAL MACROS
+// GLOBAL MACROS
 /****************************************************/
 
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
 
-// Initialises Timer0 to generate TIMER0_COMPA IRQs ervery 125us
-void timer0CTCInit()
-{
-    // Mode of Operation: CTC
-    TCCR0A = (1 << WGM01);
+// Initialises Timer1 to output a PWM servo signal
+// with a frequency of 50 Hz (T = 20 ms)
+void timer1PWMInit();
 
-    // Clock Select Bit set to: clk/8
-    // fz/8 = 2 Mhz -> 500 ns per clock
-    TCCR0B = (1 << CS01);
-    
-    // Timer0 Period: 125 us
-    // 125 us / 500 ns = 250
-    OCR0A = 249;    // 250 -1
-
-    // Enable Interrupt: TIMER0_COMPA
-    TIMSK0 = (1 << OCIE0A);
-}
+//Init Timer to toggle PB1 each second
+void timer1_OC1A_Toggle1s();
+#if defined(__cplusplus)
+} // extern "C"
+#endif
