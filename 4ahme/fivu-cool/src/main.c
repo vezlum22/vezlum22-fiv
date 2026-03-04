@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
+#include <avr/wdt.h>
 #include <string.h>
+
 
 #include "avrcomport.h"
 #include "timer0.h"
@@ -31,13 +34,21 @@ int main()
     timer2CTCInit(125);
 
     sei(); // Global Interrupt enable
-
-    cliPrintf(uart0,"Hello, World!");
-
+    cliPrintPrompt(uart0, TXT_GREEN);
     while (1)
     {
         if(cliProcessRxData(uart0)){ //someone closed their entry with ENTER (\n or \r)
-            
+            const char *cmd = NULL;
+            cmd = cliGetFirstToken(uart0);
+
+            if(strcmp(cmd,"cls")==0||strcmp(cmd,"clear")==0){
+                cliClearScreen(uart0);
+            } else if(strcmp(cmd,"rst")==0){
+                wdt_enable(WDTO_30MS);
+                while(1);
+            }
+
+            cliPrintPrompt(uart0, TXT_GREEN);
         }
      }
     return 0;
@@ -46,7 +57,6 @@ int main()
 // Interrupt Service Routine
 ISR(TIMER2_COMPA_vect)
 {
-    static char c = 0;
     if(cliHasInput(uart0)){
         cliReceiveByte(uart0);
     }
