@@ -42,7 +42,7 @@
 
 // Initialises Timer1 to output a PWM servo signal
 // with a frequency of 50 Hz (T = 20 ms)
-void timer1PWMInit()
+void timer1PWMInit(uint16_t ocr1a)
 {
     // Set Pin of PB1 as output
     DDRB |= (1 << PB1); 
@@ -65,7 +65,7 @@ void timer1PWMInit()
     ICR1 = 39999; //40000 - 1
 
     // PWM-Pulse-Width
-    OCR1A = 5000; // 5000 * 500 ns = 2.5 ms
+    OCR1A = ocr1a; // 5000 * 500 ns = 2.5 ms
                   // 4000 * 500 ns = 2ms
                   // 3000 * 500 ns = 1.5 ms
                   // 2000 * 500 ns = 1.0 ms

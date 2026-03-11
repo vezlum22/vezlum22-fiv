@@ -1,11 +1,11 @@
 /**
- * @file timer1.h
- * @author JR
- * @date 21.01.2026
- * @version 1.0
- * @brief Timer1 functions
+ * @file template.h
+ * @author author
+ * @date date
+ * @version 0.0
+ * @brief h-template
  *
- * Features: Functions to confifgure Timer/Counter1
+ * Features:
  *  
  * @copyright
  * Released under the Apache License, Version 2.0, January 2004.
@@ -21,7 +21,12 @@ extern "C" {
 /****************************************************/
 // INCLUDES
 /****************************************************/
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <avr/wdt.h>
+#include <string.h>
 
+#include "cli.h"
 /****************************************************/
 // GLOBAL DEFINES
 /****************************************************/
@@ -45,13 +50,8 @@ extern "C" {
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
+uint8_t cmdExecuteCommand(CliComPort *cliComPort);
 
-// Initialises Timer1 to output a PWM servo signal
-// with a frequency of 50 Hz (T = 20 ms)
-void timer1PWMInit(uint16_t ocr1a);
-
-//Init Timer to toggle PB1 each second
-void timer1_OC1A_Toggle1s();
 #if defined(__cplusplus)
 } // extern "C"
 #endif

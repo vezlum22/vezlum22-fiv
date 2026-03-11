@@ -18,18 +18,14 @@
 #include "timer1.h"
 #include "timer2.h"
 #include "cli.h"
+#include "cmd.h"
 
 CliComPort *uart0 = NULL;
 
-int main()
-{
-    // Set PB5 as output to control the Onboard LED
-    DDRB |= (1 << PB5);
-
+int main(){
+    //Create ComPort for uart0 with 76800 Baud
     cliCreateComPort(&uart0,avrcomportCreateUartTx(0,76800));
     cliAddComPort(uart0);
-
-    timer1PWMInit();
 
     timer2CTCInit(125);
 
@@ -38,16 +34,8 @@ int main()
     while (1)
     {
         if(cliProcessRxData(uart0)){ //someone closed their entry with ENTER (\n or \r)
-            const char *cmd = NULL;
-            cmd = cliGetFirstToken(uart0);
 
-            if(strcmp(cmd,"cls")==0||strcmp(cmd,"clear")==0){
-                cliClearScreen(uart0);
-            } else if(strcmp(cmd,"rst")==0){
-                wdt_enable(WDTO_30MS);
-                while(1);
-            }
-
+            cmdExecuteCommand(uart0);
             cliPrintPrompt(uart0, TXT_GREEN);
         }
      }
