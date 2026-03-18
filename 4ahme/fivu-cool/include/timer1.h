@@ -21,11 +21,16 @@ extern "C" {
 /****************************************************/
 // INCLUDES
 /****************************************************/
-
+#include <stdint.h>
 /****************************************************/
 // GLOBAL DEFINES
 /****************************************************/
-
+#define TIMER1_PWM_INITIALISED 0
+#define TIMER1_PWM_RUNNING 1
+#define TIMER1_PWM_STOPPED 2
+#define TIMER1_PWM_PARAM_ERROR 3
+#define TIMER1_PWM_MIN_PULSE 500
+#define TIMER1_PWM_MAX_PULSE 2500 
 /****************************************************/
 // GLOBAL ENUMS
 /****************************************************/
@@ -48,7 +53,10 @@ extern "C" {
 
 // Initialises Timer1 to output a PWM servo signal
 // with a frequency of 50 Hz (T = 20 ms)
-void timer1PWMInit(uint16_t ocr1a);
+uint8_t timer1PWMInit(uint16_t ocr1a);
+
+//initialises and sets the pulse width 
+uint8_t timer1SetPWMPulse(uint16_t ocr1a);
 
 //Init Timer to toggle PB1 each second
 void timer1_OC1A_Toggle1s();

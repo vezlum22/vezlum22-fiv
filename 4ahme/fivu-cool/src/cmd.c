@@ -71,7 +71,13 @@ uint8_t cmdExecuteCommand(CliComPort *cliComPort){
     }else if(strcmp(cmd,"pwm1a")==0){ //pwm1a 2500 => timer1PWMinit(2500)
         const char *param = cliGetNextToken(cliComPort);
         if(param!=NULL){
-            timer1PWMInit((uint16_t)atoi(param));
+            switch(timer1SetPWMPulse((uint16_t)atoi(param))){
+                case TIMER1_PWM_INITIALISED: cliPrintf(cliComPort,PSTR("PWM initialised\n"));break;
+                case TIMER1_PWM_RUNNING: cliPrintf(cliComPort,PSTR("PWM running with pulse width %d\n",(uint16_t)atoi(param))); break;
+                case TIMER1_PWM_STOPPED: cliPrintf(cliComPort,PSTR("PWM stopped\n"));break;
+                case TIMER1_PWM_PARAM_ERROR: cliPrintf(cliComPort,PSTR("PWM param error: %d , range[%d;%d]",(uint16_t)atoi(param),TIMER1_PWM_MIN_PULSE,TIMER1_PWM_MIN_PULSE));break;
+                default: cliPrintf(cliComPort,PSTR("Unknown PWM state\n"));
+            }
         }else{
             cliPrintf_P(cliComPort,PSTR("Parameter Missing!\n"));
         }

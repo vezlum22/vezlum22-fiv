@@ -10,6 +10,7 @@
 /****************************************************/
 
 #include <avr/io.h>
+#include <stdint.h>
 #include "timer1.h"
 
 /****************************************************/
@@ -42,8 +43,23 @@
 
 // Initialises Timer1 to output a PWM servo signal
 // with a frequency of 50 Hz (T = 20 ms)
-void timer1PWMInit(uint16_t ocr1a)
-{
+uint8_t timer1PWMInit(uint16_t ocr1a){
+
+    static uint8_t initFlag = 0; //Declaration and Initialisation, static sets the lifetime of initFlag to eternity 
+
+    if(ocr1a == 0){
+        TCCR1B &= ~(1<<CS11); //stops counter clock
+        return TIMER1_PWM_STOPPED;
+    }
+
+    if(ocr1a < TIMER1_PWM_MIN_PULSE || ocr1a < TIMER1_PWM_MAX_PULSE){
+        return TIMER1_PWM_PARAM_ERROR;
+    }
+
+    if(initFlag){
+        return TIMER1_PWM_RUNNING;
+    }
+
     // Set Pin of PB1 as output
     DDRB |= (1 << PB1); 
 
@@ -70,7 +86,18 @@ void timer1PWMInit(uint16_t ocr1a)
                   // 3000 * 500 ns = 1.5 ms
                   // 2000 * 500 ns = 1.0 ms
                   // 1000 * 500 ns = 0.5 ms
+
+    initFlag = 1;
+    return TIMER1_PWM_INITIALISED; 
 }
+
+uint8_t timer1SetPWMPulse(uint16_t ocr1a){
+    uint8_t result = timer1PWMInit(ocr1a);
+    if(result != TIMER1_PWM_PARAM_ERROR){
+        OCR1A = ocr1a;
+    }
+}
+
 
 //Initalizes Timer 1 to toggle PB1 every second 
 void timer1_OC1A_Toggle1s(){
