@@ -49,10 +49,11 @@ uint8_t timer1PWMInit(uint16_t ocr1a){
 
     if(ocr1a == 0){
         TCCR1B &= ~(1<<CS11); //stops counter clock
+        initFlag = 0;
         return TIMER1_PWM_STOPPED;
     }
 
-    if(ocr1a < TIMER1_PWM_MIN_PULSE || ocr1a < TIMER1_PWM_MAX_PULSE){
+    if(ocr1a < TIMER1_PWM_MIN_PULSE || ocr1a > TIMER1_PWM_MAX_PULSE){
         return TIMER1_PWM_PARAM_ERROR;
     }
 

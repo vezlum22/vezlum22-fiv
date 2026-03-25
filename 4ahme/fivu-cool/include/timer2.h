@@ -59,6 +59,11 @@ void timer2_OC2A_SetToggleFrequency(uint16_t fsignal);
 
 //Initializes Timer2 to generate IRQs depending on period_us
 void timer2CTCInit(uint32_t period_us);
+
+uint32_t timer2GetSeconds();
+
+void timer2IncreaseSeconds();
+
 #if defined(__cplusplus)
 } // extern "C"
 #endif

@@ -31,8 +31,8 @@ int main(){
 
     sei(); // Global Interrupt enable
     cliPrintPrompt(uart0, TXT_GREEN);
-    while (1)
-    {
+    while (1){
+
         if(cliProcessRxData(uart0)){ //someone closed their entry with ENTER (\n or \r)
 
             cmdExecuteCommand(uart0);
@@ -43,9 +43,13 @@ int main(){
 }
 
 // Interrupt Service Routine
-ISR(TIMER2_COMPA_vect)
-{
+ISR(TIMER2_COMPA_vect){
+    static uint8_t isrCallCounter = 0;
+    static uint16_t milliSecCounter = 0;
     if(cliHasInput(uart0)){
         cliReceiveByte(uart0);
+    }
+    if((isrCallCounter&0x07)==0){
+        milliSecCounter++;
     }
 }

@@ -23,11 +23,15 @@
 /****************************************************/
 // LOCAL STRUCT TYPE DEFINITION
 /****************************************************/
-
+struct Timer2{
+    uint32_t seconds;
+};
 /****************************************************/
 // LOCAL STATIC STRUCTS and VARIABLES
 /****************************************************/
-
+static struct Timer2 timer2{
+    .seconds=0;
+}
 /****************************************************/
 // LOCAL FUNCTIONS
 /****************************************************/
@@ -109,4 +113,12 @@ void timer2CTCInit(uint32_t period_us)
 
     // Enable Interrupt: TIMER0_COMPA
     TIMSK2 = (1 << OCIE2A);
+}
+
+void timer2IncreaseSeconds(){
+    timer2.seconds++;
+}
+
+uint32_t timer2GetSeconds(){
+    return timer2.seconds;
 }
