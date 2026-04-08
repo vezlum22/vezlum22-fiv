@@ -46,10 +46,17 @@ int main(){
 ISR(TIMER2_COMPA_vect){
     static uint8_t isrCallCounter = 0;
     static uint16_t milliSecCounter = 0;
+ 
+    if((++isrCallCounter&0x07)==0){
+        milliSecCounter++;
+    }
+
+    if(milliSecCounter == 1000){
+        timer2IncreaseSeconds();
+        milliSecCounter=0;
+    }    
+
     if(cliHasInput(uart0)){
         cliReceiveByte(uart0);
-    }
-    if((isrCallCounter&0x07)==0){
-        milliSecCounter++;
     }
 }
