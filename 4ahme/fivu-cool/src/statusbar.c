@@ -9,6 +9,9 @@
 // INCLUDES
 /****************************************************/
 
+#include "statusbar.h"
+#include "timer2.h"
+
 /****************************************************/
 // LOCAL DEFINES
 /****************************************************/
@@ -36,3 +39,11 @@
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
+
+void statusBar0(CliComPort* uart0){
+
+    uint32_t seconds = timer2GetSeconds();
+    cliPrintf_P(uart0,PSTR(TXT_COLOR_REVERSE TXT_WHITE_BRIGHT TXT_UNDERLINED_TWICE));
+    cliPrintf_P(uart0, PSTR("Runtime: %02d:%02d:%02d\n"), (int)seconds/3600 , (int)seconds / 60 % 60, (int)seconds % 60);
+    cliPrintf_P(uart0,PSTR(TXT_RESET_FORMAT));
+}

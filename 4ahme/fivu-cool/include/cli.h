@@ -48,7 +48,7 @@ extern "C" {
 /****************************************************/
 
 #ifndef CLI_PORT_COUNT_MAX
-#define CLI_PORT_COUNT_MAX          0x02
+#define CLI_PORT_COUNT_MAX          0x01
 #define CLI_SCREEN_LINES_MAX        0x20
 #endif
 #if (CLI_PORT_COUNT_MAX + 0) < 1

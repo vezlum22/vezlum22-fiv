@@ -1,6 +1,6 @@
 /**
  * @file timer2.c
- * @author JR
+ * @author Deutschmann
  * @date 21.01.2026
  * @brief Timer2 functions
  */
@@ -23,15 +23,22 @@
 /****************************************************/
 // LOCAL STRUCT TYPE DEFINITION
 /****************************************************/
-struct Timer2{
-    uint32_t seconds;
+
+struct Timer2
+{
+    uint32_t seconds;   //Komponenten in C
 };
+
 /****************************************************/
 // LOCAL STATIC STRUCTS and VARIABLES
 /****************************************************/
-static struct Timer2 timer2{
-    .seconds=0;
+
+//static: timer 2 as a struct variable only aviable in timer2.c
+static struct Timer2 timer2 = 
+{
+    .seconds = 0
 };
+
 /****************************************************/
 // LOCAL FUNCTIONS
 /****************************************************/
@@ -94,11 +101,11 @@ void timer2_OC2A_SetToggleFrequency(uint16_t fsignal)
 
 void timer2CTCInit(uint32_t period_us)
 {
-    if(period_us <1){
+    if(period_us < 1)
         period_us = 1;
-    }else if(period_us>128){
-        period_us=128;
-    }
+    if(period_us > 128)
+        period_us = 128;
+
 
     // Mode of Operation: CTC
     TCCR2A = (1 << WGM21);
@@ -109,16 +116,19 @@ void timer2CTCInit(uint32_t period_us)
     
     // Timer0 Period: 125 us
     // 125 us / 500 ns = 250
-    OCR2A = (period_us << 1)-1;    // 250 -1
+    OCR2A = (period_us << 1) - 1;    // 250 -1
 
-    // Enable Interrupt: TIMER0_COMPA
+    // Enable Interrupt: TIMER2_COMPA
     TIMSK2 = (1 << OCIE2A);
 }
 
-void timer2IncreaseSeconds(){
+//Set value of timer2.seconds by increasing it
+void timer2IncreaseSeconds()
+{
     timer2.seconds++;
 }
 
-uint32_t timer2GetSeconds(){
+uint32_t timer2GetSeconds()
+{
     return timer2.seconds;
 }

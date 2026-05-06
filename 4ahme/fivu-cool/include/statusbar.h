@@ -1,11 +1,11 @@
 /**
- * @file timer2.h
- * @author Deutschmann
- * @date 21.01.2026
- * @version 1.0
- * @brief Timer2 functions
- * 
- * Features: Functions to confifgure Timer/Counter2
+ * @file template.h
+ * @author author
+ * @date date
+ * @version 0.0
+ * @brief h-template
+ *
+ * Features:
  *  
  * @copyright
  * Released under the Apache License, Version 2.0, January 2004.
@@ -22,8 +22,7 @@ extern "C" {
 // INCLUDES
 /****************************************************/
 
-//use stdint.h if typedefs like unit8_t are used
-#include <stdint.h>
+#include "cli.h"
 
 /****************************************************/
 // GLOBAL DEFINES
@@ -49,22 +48,7 @@ extern "C" {
 // GLOBAL FUNCTIONS
 /****************************************************/
 
-// Initialises Timer2 to toggle OC2A
-// with a frequency of 10 kHz
-void timer2_OC2A_Toggle10k();
-
-// Initialises Timer2 to toggle OC2A
-// with a frequency set by fsignal
-void timer2_OC2A_SetToggleFrequency(uint16_t fsignal);
-
-//Initializes Timer 2 to generate IRQs depending on period_us
-void timer2CTCInit(uint32_t period_us);
-
-//Set value of timer2.seconds by increasing it
-void timer2IncreaseSeconds();
-
-//Get the current value of timer2.seconds
-uint32_t timer2GetSeconds();
+void statusBar0(CliComPort* uart0);
 
 #if defined(__cplusplus)
 } // extern "C"

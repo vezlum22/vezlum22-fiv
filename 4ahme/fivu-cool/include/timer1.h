@@ -1,6 +1,6 @@
 /**
  * @file timer1.h
- * @author JR
+ * @author Deutschmann
  * @date 21.01.2026
  * @version 1.0
  * @brief Timer1 functions
@@ -21,16 +21,20 @@ extern "C" {
 /****************************************************/
 // INCLUDES
 /****************************************************/
-#include <stdint.h>
+
+#include <stdint.h>  
+
 /****************************************************/
 // GLOBAL DEFINES
 /****************************************************/
+
 #define TIMER1_PWM_INITIALISED 0
 #define TIMER1_PWM_RUNNING 1
 #define TIMER1_PWM_STOPPED 2
 #define TIMER1_PWM_PARAM_ERROR 3
 #define TIMER1_PWM_MIN_PULSE 500
-#define TIMER1_PWM_MAX_PULSE 2500 
+#define TIMER1_PWM_MAX_PULSE 2500
+
 /****************************************************/
 // GLOBAL ENUMS
 /****************************************************/
@@ -55,11 +59,12 @@ extern "C" {
 // with a frequency of 50 Hz (T = 20 ms)
 uint8_t timer1PWMInit(uint16_t ocr1a);
 
-//initialises and sets the pulse width 
+//Initialises and sets the pulse width
 uint8_t timer1SetPWMPulse(uint16_t ocr1a);
 
-//Init Timer to toggle PB1 each second
 void timer1_OC1A_Toggle1s();
+
+
 #if defined(__cplusplus)
 } // extern "C"
 #endif

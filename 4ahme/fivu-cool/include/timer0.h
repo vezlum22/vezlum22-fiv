@@ -1,6 +1,6 @@
 /**
  * @file timer0.h
- * @author JR
+ * @author Deutschmann
  * @date 14.01.2026
  * @version 1.0
  * @brief Timer0 functions

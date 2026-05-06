@@ -21,12 +21,12 @@ extern "C" {
 /****************************************************/
 // INCLUDES
 /****************************************************/
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <avr/wdt.h>
-#include <string.h>
 
-#include "cli.h"
+#include <stdint.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include "cli_transport.h"
+
 /****************************************************/
 // GLOBAL DEFINES
 /****************************************************/
@@ -50,6 +50,8 @@ extern "C" {
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
+
+extern CliComPort *uart0;
 uint8_t cmdExecuteCommand(CliComPort *cliComPort);
 
 #if defined(__cplusplus)
