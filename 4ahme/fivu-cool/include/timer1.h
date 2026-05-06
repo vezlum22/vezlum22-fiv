@@ -1,6 +1,6 @@
 /**
  * @file timer1.h
- * @author Deutschmann
+ * @author JR
  * @date 21.01.2026
  * @version 1.0
  * @brief Timer1 functions
@@ -22,7 +22,7 @@ extern "C" {
 // INCLUDES
 /****************************************************/
 
-#include <stdint.h>  
+#include <stdint.h>
 
 /****************************************************/
 // GLOBAL DEFINES
@@ -59,11 +59,11 @@ extern "C" {
 // with a frequency of 50 Hz (T = 20 ms)
 uint8_t timer1PWMInit(uint16_t ocr1a);
 
-//Initialises and sets the pulse width
+// Initialises and sets the pulse width
 uint8_t timer1SetPWMPulse(uint16_t ocr1a);
 
+// Initialises Timer1 to toggle PB1 each second
 void timer1_OC1A_Toggle1s();
-
 
 #if defined(__cplusplus)
 } // extern "C"

@@ -1,6 +1,6 @@
 /**
  * @file timer0.c
- * @author Deutschmann
+ * @author JR
  * @date 14.01.2026
  * @brief Timer0 functions
  */

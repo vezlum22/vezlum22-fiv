@@ -2,7 +2,10 @@
 
 /**
  * @file avrcomport.c
+ * @author Thomas Jerman
  * @brief UART-backed CLI transport implementation for AVR targets.
+ * @date 24.12.2025
+ * @version 2.0 (10.01.2026)
  */
 
 #include <avr/io.h> // AVR-specific IO register definitions.
