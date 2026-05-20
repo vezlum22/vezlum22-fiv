@@ -114,10 +114,16 @@ uint8_t cmdExecuteCommand(CliComPort *cliComPort)
             else
                 cliPrintf_P(cliComPort, PSTR("ADC channel %d set successfully!\n"), channel);
         }
+
         else
             cliPrintf_P(cliComPort, PSTR("Parameter missing!\n"));
     }
     
+    else if(strcmp(cmd,"arduino")==0){
+            cliPrintf_P(cliComPort, PSTR("\n          :::     :::::::::  :::::::::  :::    ::: ::::::::::: ::::    :::  ::::::::\n       :+: :+:   :+:    :+: :+:    :+: :+:    :+:     :+:     :+:+:   :+: :+:    :+:\n     +:+   +:+  +:+    +:+ +:+    +:+ +:+    +:+     +:+     :+:+:+  +:+ +:+    +:+\n   +#++:++#++: +#++:++#:  +#+    +:+ +#+    +:+     +#+     +#+ +:+ +#+ +#+    +:+\n  +#+     +#+ +#+    +#+ +#+    +#+ +#+    +#+     +#+     +#+  +#+#+# +#+    +#+\n #+#     #+# #+#    #+# #+#    #+# #+#    #+#     #+#     #+#   #+#+# #+#    #+#\n###     ### ###    ### #########   ########  ########### ###    ####  ########\n\n"));
+    }
+
+
     else
         cliPrintf_P(cliComPort, PSTR("Unknown command!\n"));
     return 0;

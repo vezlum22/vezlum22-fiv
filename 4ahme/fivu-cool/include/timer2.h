@@ -71,6 +71,12 @@ void timer2_OC2A_SetToggleFrequency(uint16_t fsignal);
 // period_us
 void timer2CTCInit(uint32_t period_us);
 
+// Sets value of timer2.milliSeconds by increasing it
+void timer2IncreaseMillis();
+
+// Gets the current value of timer2.milliSeconds
+uint32_t timer2GetMillis();
+
 // Sets value of timer2.seconds by increasing it
 void timer2IncreaseSeconds();
 
@@ -96,6 +102,8 @@ void timer2CheckOverrun();
 
 // Returns the isrOverrunFlag
 uint8_t timer2GetOverrunFlag();
+
+
 
 #if defined(__cplusplus)
 } // extern "C"

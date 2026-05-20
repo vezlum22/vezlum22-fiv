@@ -80,7 +80,9 @@ uint8_t adcInit(enum AdcVRef adcVRef, uint8_t didr0)
 
     // Enable ADC and set prescaler to 128
     ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
-
+    //0011 1111
+    //   3    F
+    
     // Starting first conversion on ADC_CH_0 as a dummy conversion
     // to initialise the analog circuitry (takes 25 clocks)
     ADCSRA |= (1 << ADSC);

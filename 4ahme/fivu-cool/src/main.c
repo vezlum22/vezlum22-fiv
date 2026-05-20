@@ -19,6 +19,7 @@
 #include "timer2.h"
 #include "statusbar.h"
 #include "adc.h"
+#include "onboardled.h"
 
 CliComPort *uart0 = NULL; 
 
@@ -37,14 +38,19 @@ int main()
     // Initialise Timer2 for ISR calling
     timer2CTCInit(125);
 
+    onboardledInit(ONBOARDLED_STATE_START_1HZ_BLINK);
+
     // Global Interrupt enable
     sei();
 
     //TXT_GREEN = ANSI Escape Code
     cliPrintPrompt(uart0, TXT_GREEN);
+    DDRB |= (1<<PB5);
 
     while (1)
     {
+        onboardledRunStateMachine();
+        
         //If cliProcessRxData() returns 1, a received command can be exectuted
         if(cliProcessRxData(uart0)) //somebody closed their entry with ENTER (\n, \r \n\r)
         {
@@ -71,7 +77,11 @@ ISR(TIMER2_COMPA_vect)
 
     // Count milli seconds
     if((++isrCallCounter & 0x07) == 0)
+    {
         milliSecCounter++;
+        timer2IncreaseMillis();
+    }
+
 
     adcSaveLastConversion();
     adcStartNewConversion();

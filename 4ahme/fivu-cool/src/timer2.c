@@ -31,9 +31,11 @@ _Static_assert(TIMER2_ISR_EXIT == TIMER2_ISR_CAPTURE_COUNT - 1,
 
 struct Timer2
 {
-    uint32_t seconds;
-    uint8_t isrOverrunFlag;
-    uint8_t capture[TIMER2_ISR_CAPTURE_COUNT];
+    volatile uint32_t milliSeconds;
+    volatile uint32_t seconds;
+    volatile uint8_t changeFlag;
+    volatile uint8_t isrOverrunFlag;
+    volatile uint8_t capture[TIMER2_ISR_CAPTURE_COUNT];
 };
 
 /****************************************************/
@@ -42,7 +44,9 @@ struct Timer2
 
 static struct Timer2 timer2 =
 {
+    .milliSeconds = 0,
     .seconds = 0,
+    .changeFlag = 0,
     .isrOverrunFlag = 0,
     .capture = {0}
 };
@@ -131,16 +135,45 @@ void timer2CTCInit(uint32_t period_us)
     TIMSK2 = (1 << OCIE2A);
 }
 
+void timer2IncreaseMillis()
+{
+    timer2.milliSeconds++;
+    timer2.changeFlag++;
+}
+
+// Gets the current value of timer2.milliSeconds
+uint32_t timer2GetMillis()
+{
+    uint8_t changeFlag;
+    uint32_t milliSeconds;
+
+    do{
+        changeFlag = timer2.changeFlag;
+        milliSeconds = timer2.milliSeconds; //Could be torn by ISR
+    }while(changeFlag != timer2.changeFlag);
+
+    return timer2.milliSeconds;
+}
+
 // Sets value of timer2.seconds by increasing it
 void timer2IncreaseSeconds()
 {
     timer2.seconds++;
+    timer2.changeFlag++;
 }
 
 // Gets the current value of timer2.seconds
 uint32_t timer2GetSeconds()
 {
-    return timer2.seconds;
+    uint8_t changeFlag;
+    uint32_t seconds;
+
+    do{
+        changeFlag = timer2.changeFlag;
+        seconds = timer2.seconds; //Could be torn by ISR
+    }while(changeFlag != timer2.changeFlag);
+
+    return seconds;
 }
 
 // Captures the current value of TCNT2 and stores it in
