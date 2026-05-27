@@ -12,8 +12,6 @@
 #include "statusbar.h"
 #include "timer2.h"
 #include "adc.h"
-#include "sht3x.h"
-#include "tcs34725.h"
 #include "mpu6050.h"
 
 /****************************************************/
@@ -149,18 +147,10 @@ void statusBar0(CliComPort *uart0)
     int16_t mpuGyroY = scaleFloat(mpu6050GetGyroY(), 1000.0f);
     int16_t mpuGyroZ = scaleFloat(mpu6050GetGyroZ(), 1000.0f);
     int16_t mpuTemp = scaleFloat(mpu6050GetTempC(), 10.0f);
-    int16_t shtTemp = scaleFloat(sht3xGetTempC(), 10.0f);
-    int16_t shtHumidity = scaleFloat(sht3xGetRelativeHumidity(), 10.0f);
     charsPrinted = cliPrintf_P(uart0, PSTR("ADMUX change after: %d us | ADC_CH_0: %d.%03d V | ADC_CH_1: %d.%03d V"),
         channelChangeMicros,
         adc0Millivolt / 1000, adc0Millivolt % 1000,
         adc1Millivolt / 1000, adc1Millivolt % 1000);
-    //cliPrintf_P(uart0, PSTR(CLEAR_LINE_END "\n"));
-    printPadLine(uart0, charsPrinted);
-        
-    charsPrinted = cliPrintf_P(uart0, PSTR("SHT3x Update: %d us | T: %c%d.%01d deg. C | RH: %d.%01d %%RH | Error: %d"),
-        (uint16_t) sht3xGetUpdateDurationMicros(), sign16(shtTemp), abs16(shtTemp) / 10, abs16(shtTemp) % 10,
-        shtHumidity / 10, shtHumidity % 10, sht3xGetError());
     //cliPrintf_P(uart0, PSTR(CLEAR_LINE_END "\n"));
     printPadLine(uart0, charsPrinted);
 
@@ -177,12 +167,6 @@ void statusBar0(CliComPort *uart0)
         sign16(mpuGyroY), abs16(mpuGyroY) / 1000, abs16(mpuGyroY) % 1000,
         sign16(mpuGyroZ), abs16(mpuGyroZ) / 1000, abs16(mpuGyroZ) % 1000,
         sign16(mpuTemp), abs16(mpuTemp) / 10, abs16(mpuTemp) % 10, mpu6050GetError());
-    //cliPrintf_P(uart0, PSTR(CLEAR_LINE_END "\n"));
-    printPadLine(uart0, charsPrinted);
-
-    charsPrinted = cliPrintf_P(uart0, PSTR("TCS34725 Update: %d us | R:%3d, G:%3d, B:%3d | CT:%5d | Lux:%5d | Error: %d"),
-        (uint16_t) tcs34725GetUpdateDurationMicros(), tcs34725GetNormedR(), tcs34725GetNormedG(), tcs34725GetNormedB(), tcs34725GetColorTemp(),
-        tcs34725GetLux(), tcs34725GetError());
     //cliPrintf_P(uart0, PSTR(CLEAR_LINE_END "\n"));
     printPadLine(uart0, charsPrinted);
 

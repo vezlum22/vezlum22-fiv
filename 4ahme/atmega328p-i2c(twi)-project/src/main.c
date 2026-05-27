@@ -19,9 +19,7 @@
 #include "timer2.h"
 #include "statusbar.h"
 #include "adc.h"
-#include "tcs34725.h"
 #include "twi.h"
-#include "sht3x.h"
 #include "mpu6050.h"
 
 CliComPort *uart0 = NULL;
@@ -68,10 +66,7 @@ int main()
 
     // Initialise TWI
     twiInit(100000UL);
-    // Initialise the TCS34725
-    tcs34725Init(1000000UL, timer2GetMicros);
-    // Initialise the SHT31
-    sht3xInit(SHT3X_DEFAULT_ADDRESS, 1000000UL, timer2GetMicros);
+
     // Initialise the MPU6050
     mpu6050Init(MPU6050_DEFAULT_ADDRESS, 100000UL, timer2GetMicros);
     mpu6050StartCalibration(MPU6050_DEFAULT_CALIBRATION_SAMPLES);
@@ -88,8 +83,6 @@ int main()
     while (1)
     {
         timer2SaveMillisCapture(TIMER2_CAPTURE_MILLIS_MAIN_LOOP_START);
-        sht3xUpdateStateMachine();
-        tcs34725UpdateStateMachine();
         mpu6050UpdateStateMachine();
 
         // If cliProcessRxData() returns 1, a received command can be exectuted
