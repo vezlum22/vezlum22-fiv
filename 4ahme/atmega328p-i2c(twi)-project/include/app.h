@@ -30,18 +30,16 @@ extern "C" {
 // GLOBAL ENUMS
 /****************************************************/
 
-enum MPU6050State
+enum MPUState
 {
-    ONBOARDLED_STATE_IDLE = 0,
-    ONBOARDLED_STATE_START_1HZ_BLINK,
-    ONBOARDLED_STATE_BLINK_LED_ON,
-    ONBOARDLED_STATE_BLINK_LED_OFF,
-    ONBOARDLED_STATE_DEACTIVE
-};
-
-enum MPU6050bV
-{
-    MPU6050_
+    MPU_STATE_IDLE = 0,
+    MPU_STATE_START,
+    MPU_STATE_LED_EVEN,
+    MPU_STATE_LED_LEFT,
+    MPU_STATE_LED_RIGHT,
+    MPU_STATE_LED_DOWN,
+    MPU_STATE_LED_UP,
+    MPU_STATE_DEACTIVE
 };
 
 /****************************************************/
@@ -59,6 +57,12 @@ enum MPU6050bV
 /****************************************************/
 // GLOBAL FUNCTIONS
 /****************************************************/
+
+//Initialisierung der Anwendung 
+void appInit(enum MPUState state);
+
+//Betrieb der Anwendung
+void appUpdateStateMachine();
 
 #if defined(__cplusplus)
 } // extern "C"

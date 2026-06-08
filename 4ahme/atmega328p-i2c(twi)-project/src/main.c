@@ -70,7 +70,7 @@ int main()
     // Initialise the MPU6050
     mpu6050Init(MPU6050_DEFAULT_ADDRESS, 100000UL, timer2GetMicros);
     mpu6050StartCalibration(MPU6050_DEFAULT_CALIBRATION_SAMPLES);
-
+    appInit();
     // Initialise Timer2 for ISR calling
     timer2CTCInit(125);
 
@@ -84,6 +84,7 @@ int main()
     {
         timer2SaveMillisCapture(TIMER2_CAPTURE_MILLIS_MAIN_LOOP_START);
         mpu6050UpdateStateMachine();
+        appUpdateStateMachine();
 
         // If cliProcessRxData() returns 1, a received command can be exectuted
         if (cliProcessRxData(uart0)) // somebody closed their entry with ENTER (\n, \r \n\r)

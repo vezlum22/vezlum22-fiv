@@ -118,6 +118,10 @@ uint8_t cmdExecuteCommand(CliComPort *cliComPort)
             cliPrintf_P(cliComPort, PSTR("Parameter missing!\n"));
     }
     
+    else if(strcmp(cmd,"mpu6050")){
+        
+    }
+
     else
         cliPrintf_P(cliComPort, PSTR("Unknown command!\n"));
     return 0;
